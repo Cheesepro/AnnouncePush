@@ -6,15 +6,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
-    static String inputprefix = "";
-    static String outputprefix = "";
-    static String exitcmd = "";
-    static boolean passwd = false;
-    static String usernameprefix = "";
-    static String passwordprefix = "";
+    static Map<String, String> info = new HashMap<String, String>();
 
     public static void main(String[] args) throws Exception{
         int count = 0;
@@ -29,31 +26,31 @@ public class Main {
         boolean flag = true ;		// 定义标志位
         while(flag){
             if(count==0){
-                inputprefix = buf.readLine();
-                outputprefix = buf.readLine();
-                exitcmd = buf.readLine();
-                passwd = Boolean.valueOf(buf.readLine());
-                if(passwd){
-                    usernameprefix = buf.readLine();
-                    passwordprefix = buf.readLine();
-                    Logger.writenospace(usernameprefix);
+                int infocount = Integer.parseInt(buf.readLine());
+                for(int i = 0; i<infocount; i++){
+                    String[] get = buf.readLine().split("#");
+                    info.put(get[0], get[1]);
+                }
+                if(Boolean.parseBoolean(info.get("requirelogin"))){
+                    Logger.write("LOGIN");
+                    Logger.writenospace(info.get("usernameprefix"));
                     String username = input.readLine();
-                    Logger.writenospace(passwordprefix);
+                    Logger.writenospace(info.get("passwordprefix"));
                     String passwd = input.readLine();
                     out.println(username + " " + passwd);
-                    String echo = buf.readLine() ;	// 接收返回结果
-                    Logger.write(outputprefix + echo);
+                    String echo = buf.readLine() ;
+                    Logger.write(info.get("inputprefix") + echo);
                 }
                 count++;
             }
-            Logger.writenospace(inputprefix);
-            String str = input.readLine() ;	// 接收键盘的输入信息
+            Logger.writenospace(info.get("inputprefix"));
+            String str = input.readLine() ;
             out.println(str) ;
-            if(exitcmd.equals(str)){
+            if(info.get("exitcommand").equals(str)){
                 flag = false ;
             }else{
-                String echo = buf.readLine() ;	// 接收返回结果
-                Logger.write(outputprefix + echo);	// 输出回应信息
+                String echo = buf.readLine() ;
+                Logger.write(info.get("outputprefix") + echo);
             }
         }
         buf.close() ;
