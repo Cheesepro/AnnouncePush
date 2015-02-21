@@ -15,15 +15,15 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
         int count = 0;
-        Socket client = null ;	// 表示客 户端
+        Socket client = null ;
         client = new Socket("localhost",2000) ;
-        BufferedReader buf = null ;	// 一次性接收完成
-        PrintStream out = null ;	// 发送数据
-        BufferedReader input = null ;	// 接收键盘数据
+        BufferedReader buf = null ;
+        PrintStream out = null ;
+        BufferedReader input = null ;
         input = new BufferedReader(new InputStreamReader(System.in)) ;
         buf = new BufferedReader(new InputStreamReader(client.getInputStream())) ;
         out = new PrintStream(client.getOutputStream()) ;
-        boolean flag = true ;		// 定义标志位
+        boolean flag = true ;
         while(flag){
             if(count==0){
                 int infocount = Integer.parseInt(buf.readLine());
