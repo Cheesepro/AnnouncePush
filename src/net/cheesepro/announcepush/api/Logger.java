@@ -6,11 +6,11 @@ package net.cheesepro.announcepush.api;
 public class Logger {
 
     public static void write(String msg){
-        System.out.println("[AnnouncePushServer] " + msg);
+        System.out.println("[AnnouncePush] " + msg);
     }
 
     public static void writenospace(String msg){
-        System.out.print("[AnnouncePushServer] " + msg);
+        System.out.print("[AnnouncePush] " + msg);
     }
 
 }
